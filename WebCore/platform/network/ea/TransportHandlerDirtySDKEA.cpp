@@ -1346,6 +1346,9 @@ SocketTransportHandlerDirtySDK::~SocketTransportHandlerDirtySDK()
 
 bool SocketTransportHandlerDirtySDK::Init()
 {
+#if (BUILDING_EAWEBKIT_DLL)
+	SocketCreate(0);
+#endif
 	bool success = mSocketInfoList.empty();
 	EA_ASSERT_MSG(success, "SocketInfoList should be empty at Init");
 

@@ -213,14 +213,14 @@ void PlatformContextCairo::drawSurfaceToContext(cairo_surface_t* surface, const 
 		}
 		//-EAWebKitChange
     case InterpolationMedium:
+    case InterpolationDefault:
+        cairo_pattern_set_filter(pattern.get(), CAIRO_FILTER_GOOD);
+        break;
 	//+EAWebKitChange
 	//10/27/2015 - Keep using the CAIRO_FILTER_BILINEAR image filter. CAIRO_FILTER_GOOD/CAIRO_FILTER_BEST as used in opensource webkit
 	//codebase come at the cost of rendering performance.
     case InterpolationHigh:
-        cairo_pattern_set_filter(pattern.get(), CAIRO_FILTER_BILINEAR);
-        break;
-    case InterpolationDefault:
-        cairo_pattern_set_filter(pattern.get(), CAIRO_FILTER_BILINEAR);
+        cairo_pattern_set_filter(pattern.get(), CAIRO_FILTER_BEST);
         break;
 	//-EAWebKitChange
     }
