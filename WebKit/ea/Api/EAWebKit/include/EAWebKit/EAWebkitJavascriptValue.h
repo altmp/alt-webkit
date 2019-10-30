@@ -266,6 +266,9 @@ public:
 
 	// Functions - Call this value as function
 	virtual bool Call(JavascriptValue *args, size_t argCount, JavascriptValue *pValueOut = NULL);
+	
+	// Compare
+	virtual bool IsSame(JavascriptValue* rhs);
 
 	// Object property iteration
     class PropertyIterator {

@@ -454,6 +454,15 @@ bool JavascriptValue::Call(JavascriptValue *args, size_t argCount, JavascriptVal
     return false;
 }
 
+bool JavascriptValue::IsSame(JavascriptValue* rhs)
+{
+	SET_AUTOFPUPRECISION(EA::WebKit::kFPUPrecisionExtended);
+	EAWEBKIT_THREAD_CHECK();
+	EAWWBKIT_INIT_CHECK();
+
+	return GetImpl() == rhs->GetImpl();
+}
+
 JavascriptValue::JavascriptValue(JSC::JSValue *jsValue, JSC::ExecState *execState)
 : mExecState(execState)
 , mIterator(NULL) 

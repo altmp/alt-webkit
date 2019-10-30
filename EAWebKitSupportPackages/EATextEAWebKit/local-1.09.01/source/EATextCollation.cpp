@@ -3231,6 +3231,12 @@ EATEXT_API CaseType GetCase(Char c)
 {
     if(c < 0x0590) // Chars above this have no case that we recognize
     {
+#ifdef EA_PLATFORM_WINDOWS
+		if (IsCharUpperW(c))
+			return kCaseTypeUpper;
+		else
+			return kCaseTypeLower;
+#else
         const Char lc = gLowerCaseTable[c];
         if(lc)  // If there is a lower case version of this character...
             return kCaseTypeUpper;
@@ -3238,6 +3244,7 @@ EATEXT_API CaseType GetCase(Char c)
         const Char uc = gUpperCaseTable[c];
         if(uc) // If there is an upper case version of this character...
             return kCaseTypeLower;
+#endif
     }
 
     return kCaseTypeNone;
@@ -3256,8 +3263,15 @@ static uint32_t ConvertCaseLower(const Char* pTextInput, uint32_t nTextLength, C
     {
         Char c = pTextInput[i];
 
+#ifdef EA_PLATFORM_WINDOWS
+		DWORD symb = c;
+		symb = (DWORD)CharLowerW((LPWSTR)symb);
+		c = symb;
+#else
+
         // Write hard-coded logic for the most common case.
         // We have this logic here in order to avoid a possible memory cache hit to the table.
+		
         if(c < 0x005b)
         {
             if(c > 0x0040)
@@ -3270,6 +3284,7 @@ static uint32_t ConvertCaseLower(const Char* pTextInput, uint32_t nTextLength, C
                 c = gLowerCaseTable[c];
         }
         // else no change.
+#endif
 
         if((i + 1) < nTextOutputCapacity)
             pTextOutput[j++] = c;
@@ -3290,16 +3305,27 @@ static uint32_t ConvertCaseUpper(const Char* pTextInput, uint32_t nTextLength, C
     EA_ASSERT(pTextInput != NULL);
     uint32_t i, j;
 
-    for(i = 0, j = 0; i != nTextLength; i++)
-    {
-        Char c = pTextInput[i];
+	for (i = 0, j = 0; i != nTextLength; i++)
+	{
+		Char c = pTextInput[i];
 
-        // Write hard-coded logic for the most common case.
+#ifdef EA_PLATFORM_WINDOWS
+		DWORD symb = c;
+		symb = (DWORD)CharUpperW((LPWSTR)symb);
+		c = symb;
+#else
+		// Write hard-coded logic for the most common case.
         // We have this logic here in order to avoid a possible memory cache hit to the table.
         if(c > 0x0060)
         {
             if(c < 0x007b)
                 c -= 0x0020;
+            else if(c >= 0x0430 && c <= 0x044F)
+            {
+                c -= 0x0020;
+            }
+            else if(c == 0x0451)
+                c = 0x401;
             else if(c < 0x0590) // chars above this have no case that we recognize
             {
                 if(gUpperCaseTable[c])
@@ -3307,6 +3333,7 @@ static uint32_t ConvertCaseUpper(const Char* pTextInput, uint32_t nTextLength, C
             }
             // else no change.
         }
+#endif
 
         if((i + 1) < nTextOutputCapacity)
             pTextOutput[j++] = c;
