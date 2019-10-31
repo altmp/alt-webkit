@@ -214,7 +214,7 @@ void JavascriptValue::SetStringValue(const char16_t *v)
 	EAWEBKIT_THREAD_CHECK();
     EAWWBKIT_INIT_CHECK(); 
     
-	EAW_ASSERT_MSG(v && v[0], "String is NULL.");
+	EAW_ASSERT_MSG(v, "String is NULL.");
     
 	WTF::String s(v);
     JSC::JSValue jsVal = JSC::jsString(mExecState, s);
