@@ -107,7 +107,7 @@ void JSLock::lock()
 void JSLock::lock(intptr_t lockCount)
 {
 	ASSERT(lockCount > 0);
-	//+EAWebKitChange
+	//+EAWebKitChange --skiped
 	//07/07/2016 - added  && (m_lockCount > 0) to condition
 	//currentThreadIsHoldingLock doesn't really return if it is holding the lock, but more so if it should have the lock
 	//this change allows us to take the lock the first time
@@ -199,7 +199,7 @@ void JSLock::unlock(ExecState* exec)
 bool JSLock::currentThreadIsHoldingLock()
 {
 	ASSERT(!m_hasExclusiveThread || (exclusiveThread() == std::this_thread::get_id()));
-	//+EAWebKitChange
+	//+EAWebKitChange --skiped
 	//07/07/2016 - this logic is more strait forward and fixes an assert in DestroyJavascriptValue after EvaluateJavaScript
 	if (m_hasExclusiveThread && exclusiveThread() == std::this_thread::get_id())
 	{

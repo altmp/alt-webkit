@@ -108,7 +108,7 @@ ALWAYS_INLINE bool JSStringJoiner::appendWithoutSideEffects(ExecState& state, JS
     // 5) It uses optimized code paths for all the cases known to be 8-bit and for the empty string.
 	// If we might make an effectful calls, return false. Otherwise return true. 
 
-	//+EAWebKitChange
+	//+EAWebKitChange --skiped
 	//05/09/2017
 	// Worked upon a security fix - CVE-2016-1857 from http://trac.webkit.org/changeset/198592 
 	// Handling values of string and non-string types, which fixes carousals in  
@@ -121,7 +121,7 @@ ALWAYS_INLINE bool JSStringJoiner::appendWithoutSideEffects(ExecState& state, JS
 			append(jsString->viewWithUnderlyingString(state));
 			return true;
 		}
-		//+EAWebKitChange
+		//+EAWebKitChange --skiped
 		//05/09/2017
 		// Worked upon a security fix - CVE-2016-1857 from http://trac.webkit.org/changeset/198592 
 		// Handling values of string and non-string types, which fixes carousals in  

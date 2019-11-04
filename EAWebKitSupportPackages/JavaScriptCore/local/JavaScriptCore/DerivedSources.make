@@ -80,7 +80,7 @@ PYTHON = python
 PERL = perl
 
 ifeq ($(OS),Windows_NT)
-#+EAWebKitChange
+#+EAWebKitChange --skiped
 #09/14/2015
 #Provided an implementation that assumes you have cygwin, but does not hang the command prompt (was 'cmd //C del')
     DELETE = rm -f

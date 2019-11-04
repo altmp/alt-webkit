@@ -48,7 +48,7 @@
 
 #else // !USE(EXPORT_MACROS)
 
-//+EAWebKitChange
+//+EAWebKitChange --skiped
 //1/15/2014
 #if OS(WINDOWS) && !COMPILER(GCC_OR_CLANG) && !PLATFORM(EA)
 //-EAWebKitChange
